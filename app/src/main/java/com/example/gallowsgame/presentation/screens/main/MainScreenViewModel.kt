@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class MainScreenViewModel @Inject constructor()  : ViewModel()  {
+class MainScreenViewModel @Inject constructor() : ViewModel()  {
 
     private val _uiState = MutableStateFlow(
         MainScreenUiState()
