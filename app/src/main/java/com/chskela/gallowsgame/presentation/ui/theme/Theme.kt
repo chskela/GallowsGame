@@ -1,4 +1,4 @@
-package com.example.gallowsgame.presentation.ui.theme
+package com.chskela.gallowsgame.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

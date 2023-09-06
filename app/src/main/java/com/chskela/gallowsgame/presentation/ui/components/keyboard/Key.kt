@@ -1,4 +1,4 @@
-package com.example.gallowsgame.presentation.ui.components.keyboard
+package com.chskela.gallowsgame.presentation.ui.components.keyboard
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.gallowsgame.presentation.ui.theme.GallowsGameTheme
+import com.chskela.gallowsgame.presentation.ui.theme.GallowsGameTheme
 
 
 @Composable

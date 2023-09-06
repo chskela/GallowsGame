@@ -1,4 +1,4 @@
-package com.example.gallowsgame.presentation.screens.main.models
+package com.chskela.gallowsgame.presentation.screens.main.models
 
 data class MainScreenUiState(
     val word: String = "мама",

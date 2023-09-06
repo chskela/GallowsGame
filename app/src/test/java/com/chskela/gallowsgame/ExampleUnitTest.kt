@@ -1,4 +1,4 @@
-package com.example.gallowsgame
+package com.chskela.gallowsgame
 
 import org.junit.Test
 

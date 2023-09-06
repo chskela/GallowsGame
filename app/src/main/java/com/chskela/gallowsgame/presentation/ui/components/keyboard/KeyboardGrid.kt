@@ -1,11 +1,11 @@
-package com.example.gallowsgame.presentation.ui.components.keyboard
+package com.chskela.gallowsgame.presentation.ui.components.keyboard
 
 import android.content.res.Configuration
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.gallowsgame.presentation.ui.theme.GallowsGameTheme
+import com.chskela.gallowsgame.presentation.ui.theme.GallowsGameTheme
 import kotlin.math.ceil
 
 @Composable

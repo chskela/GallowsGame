@@ -1,4 +1,4 @@
-package com.example.gallowsgame.presentation.screens.main
+package com.chskela.gallowsgame.presentation.screens.main
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
@@ -16,10 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.gallowsgame.presentation.screens.main.models.MainScreenUiState
-import com.example.gallowsgame.presentation.ui.components.keyboard.Key
-import com.example.gallowsgame.presentation.ui.components.keyboard.KeyboardGrid
-import com.example.gallowsgame.presentation.ui.theme.GallowsGameTheme
+import com.chskela.gallowsgame.presentation.screens.main.models.MainScreenUiState
+import com.chskela.gallowsgame.presentation.ui.components.keyboard.Key
+import com.chskela.gallowsgame.presentation.ui.components.keyboard.KeyboardGrid
+import com.chskela.gallowsgame.presentation.ui.theme.GallowsGameTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
