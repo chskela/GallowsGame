@@ -29,21 +29,31 @@ fun MainScreen(
 ) {
     Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
         Column(
-            modifier = Modifier.padding(padding).padding(horizontal = 16.dp),
+            modifier = Modifier
+                .padding(padding)
+                .padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(32.dp))
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = "* * * * * *",
+                text = uiState.mask,
                 textAlign = TextAlign.Center
             )
             Spacer(modifier = Modifier.height(32.dp))
-            KeyboardGrid {
-                ('А'..'Я').map { Key(letter = it) }
+
+            if (uiState.alphabet.isNotEmpty()) {
+                KeyboardGrid {
+                    uiState.alphabet.map { letter ->
+                        val isUsed = uiState.usedLetters.contains(letter)
+                        Key(
+                            letter = letter,
+                            enabled = !isUsed,
+                            onClick = { onEvent(MainScreenEvent.InputChar(letter)) })
+                    }
+                }
             }
         }
-
     }
 }
 
@@ -53,7 +63,7 @@ fun MainScreen(
 private fun PreviewCurrencyScreen() {
     GallowsGameTheme {
         MainScreen(
-            uiState = MainScreenUiState()
+            uiState = MainScreenUiState(alphabet = ('А'..'Я').toList())
         )
     }
 }

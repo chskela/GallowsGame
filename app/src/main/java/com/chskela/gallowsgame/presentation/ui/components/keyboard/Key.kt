@@ -19,17 +19,25 @@ import com.chskela.gallowsgame.presentation.ui.theme.GallowsGameTheme
 fun Key(
     modifier: Modifier = Modifier,
     letter: Char,
-    enabled: Boolean = true,
+    enabled: Boolean,
     onClick: () -> Unit = {}
 ) {
+    val backgroundColor = if (enabled) {
+        MaterialTheme.colorScheme.primary
+    } else MaterialTheme.colorScheme.inversePrimary
+
+    val letterColor = if (enabled) {
+        MaterialTheme.colorScheme.onPrimary
+    } else MaterialTheme.colorScheme.onBackground
+
     Box(
         modifier = modifier
-            .background(color = MaterialTheme.colorScheme.primary)
+            .background(color = backgroundColor)
             .size(70.dp)
             .clickable(onClick = onClick, enabled = enabled),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = letter.toString(), color = MaterialTheme.colorScheme.onPrimary)
+        Text(text = letter.toString(), color = letterColor)
     }
 }
 
@@ -38,6 +46,6 @@ fun Key(
 @Composable
 fun PreviewMonoButton() {
     GallowsGameTheme {
-        Key(letter = 'А')
+        Key(letter = 'А', enabled = true)
     }
 }

@@ -46,19 +46,22 @@ fun PreviewCategoryGrid() {
     GallowsGameTheme {
         KeyboardGrid {
             listOf(
-                Key(letter = 'F'),
-                Key(letter = 'F'),
-                Key(letter = 'F'),
-                Key(letter = 'F'),
-                Key(letter = 'F'),
-                Key(letter = 'F'),
-                Key(letter = 'F'),
-                Key(letter = 'F'),
-                Key(letter = 'F'),
-                Key(letter = 'F'),
-                Key(letter = 'F'),
-                Key(letter = 'F'),
-                Key(letter = 'F'),
+                Key(letter = 'F', enabled = true),
+                Key(letter = 'F', enabled = true),
+                Key(letter = 'F', enabled = true),
+                Key(letter = 'F', enabled = true),
+                Key(letter = 'F', enabled = true),
+                Key(letter = 'F', enabled = true),
+                Key(letter = 'F', enabled = true),
+                Key(letter = 'F', enabled = true),
+                Key(letter = 'F', enabled = true),
+                Key(letter = 'F', enabled = true),
+                Key(letter = 'F', enabled = true),
+                Key(letter = 'F', enabled = true),
+                Key(letter = 'F', enabled = true),
+                Key(letter = 'F', enabled = true),
+                Key(letter = 'F', enabled = true),
+                Key(letter = 'F', enabled = true),
             )
         }
     }
