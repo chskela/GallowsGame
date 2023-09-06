@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.gallowsgame"
+    namespace = "com.chskela.gallowsgame"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.example.gallowsgame"
+        applicationId = "com.chskela.gallowsgame"
         minSdk = 26
         targetSdk = 33
         versionCode = 1
