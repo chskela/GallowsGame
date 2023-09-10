@@ -1,6 +1,7 @@
 package com.chskela.gallowsgame.presentation.screens.main
 
 import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,6 +28,7 @@ fun MainScreen(
     uiState: MainScreenUiState,
     onEvent: (MainScreenEvent) -> Unit = {},
 ) {
+    Log.e("TEST", uiState.toString())
     Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
         Column(
             modifier = Modifier
