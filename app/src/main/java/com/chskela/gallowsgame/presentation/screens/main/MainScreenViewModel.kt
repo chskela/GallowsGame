@@ -34,9 +34,20 @@ class MainScreenViewModel @Inject constructor(
     fun onEvent(event: MainScreenEvent) {
         when (event) {
             is MainScreenEvent.InputChar -> {
-                _uiState.update {
-                    it.copy(usedLetters = _uiState.value.usedLetters + event.char)
+                val newUsedLetters = _uiState.value.usedLetters + event.char
+
+                val newState = if (_uiState.value.word.contains(event.char)) {
+                    val newMask = updateMask(_uiState.value.mask, _uiState.value.word, event.char)
+
+                    _uiState.value.copy(mask = newMask, usedLetters = newUsedLetters)
+                } else {
+                    _uiState.value.copy(
+                        attempts = _uiState.value.attempts + 1,
+                        usedLetters = newUsedLetters
+                    )
                 }
+
+                _uiState.update { newState }
             }
 
             MainScreenEvent.NewGame -> {
@@ -51,4 +62,8 @@ class MainScreenViewModel @Inject constructor(
             }
         }
     }
+
+    private fun updateMask(mask: String, word: String, letter: Char) = mask.mapIndexed { index, c ->
+        if (letter == word[index]) letter else c
+    }.joinToString("")
 }

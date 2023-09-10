@@ -12,11 +12,8 @@ class WordStore(pathFile: String, private val context: Context) {
 
     private fun readFile(pathFile: String): List<String> {
         val inputStream = context.assets.open(pathFile)
-//        val inputStream = getSystemClassLoader().getResourceAsStream(pathFile)
+        val streamReader = InputStreamReader(inputStream, "UTF-8")
 
-        return inputStream.let {
-            val streamReader = InputStreamReader(it, "UTF-8")
-            BufferedReader(streamReader).readLines()
-        }
+        return BufferedReader(streamReader).readLines()
     }
 }
