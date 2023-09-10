@@ -1,6 +1,5 @@
 package com.chskela.gallowsgame.presentation.screens.main
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chskela.gallowsgame.domain.words.GetRandomWordUseCase
@@ -27,7 +26,6 @@ class MainScreenViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-        Log.e("TEST", "init")
         onEvent(MainScreenEvent.NewGame)
     }
 
