@@ -2,6 +2,7 @@ package com.chskela.gallowsgame.presentation.screens.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chskela.gallowsgame.domain.game.CheckIsGameOverUserCase
 import com.chskela.gallowsgame.domain.words.GetRandomWordUseCase
 import com.chskela.gallowsgame.presentation.screens.main.models.MainScreenUiState
 import com.chskela.gallowsgame.utils.wordToMask
@@ -9,13 +10,16 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
-    private val getRandomWordUseCase: GetRandomWordUseCase
+    private val getRandomWordUseCase: GetRandomWordUseCase,
+    private val checkIsGameOverUserCase: CheckIsGameOverUserCase
 ) : ViewModel() {
 
     private val alphabet: List<Char> = ('А'..'Я').toList()
@@ -34,18 +38,30 @@ class MainScreenViewModel @Inject constructor(
             is MainScreenEvent.InputChar -> {
                 val newUsedLetters = _uiState.value.usedLetters + event.char
 
-                val newState = if (_uiState.value.word.contains(event.char)) {
+                if (_uiState.value.word.contains(event.char)) {
                     val newMask = updateMask(_uiState.value.mask, _uiState.value.word, event.char)
 
-                    _uiState.value.copy(mask = newMask, usedLetters = newUsedLetters)
-                } else {
-                    _uiState.value.copy(
-                        attempts = _uiState.value.attempts + 1,
-                        usedLetters = newUsedLetters
-                    )
-                }
+                    _uiState.update {
+                        _uiState.value.copy(
+                            mask = newMask,
+                            usedLetters = newUsedLetters
+                        )
+                    }
 
-                _uiState.update { newState }
+                } else {
+                    val newAttempts = _uiState.value.attempts + 1
+
+                    checkIsGameOverUserCase(newAttempts)
+                        .onEach { isGameOver ->
+                            _uiState.update {
+                                _uiState.value.copy(
+                                    isGameOver = isGameOver,
+                                    attempts = newAttempts,
+                                    usedLetters = newUsedLetters
+                                )
+                            }
+                        }.launchIn(viewModelScope)
+                }
             }
 
             MainScreenEvent.NewGame -> {
