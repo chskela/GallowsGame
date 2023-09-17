@@ -9,5 +9,5 @@ data class MainScreenUiState(
     val alphabet: List<Char> = listOf(),
     val usedLetters: Set<Char> = setOf(),
     val isGameOver: Boolean = false,
-    val isWin: Boolean = false
+    val isWin: Boolean = false,
 )

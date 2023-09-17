@@ -12,9 +12,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.chskela.gallowsgame.R
 import com.chskela.gallowsgame.presentation.screens.main.models.MainScreenUiState
+import com.chskela.gallowsgame.presentation.ui.components.gameoverdialog.GameDialog
 import com.chskela.gallowsgame.presentation.ui.components.keyboard.Key
 import com.chskela.gallowsgame.presentation.ui.components.keyboard.KeyboardGrid
 import com.chskela.gallowsgame.presentation.ui.components.mask.Mask
@@ -26,6 +29,21 @@ fun MainScreen(
     uiState: MainScreenUiState,
     onEvent: (MainScreenEvent) -> Unit = {},
 ) {
+    val title = if (uiState.isGameOver) {
+        stringResource(R.string.game_over)
+    } else if (uiState.isWin) {
+        stringResource(R.string.win)
+    } else ""
+
+    GameDialog(
+        word = uiState.word,
+        title = title,
+        openDialog = uiState.isGameOver || uiState.isWin,
+        onConfirm = {
+            onEvent(MainScreenEvent.NewGame)
+        }
+    )
+
     Scaffold { padding ->
         Column(
             modifier = Modifier
@@ -62,7 +80,7 @@ fun MainScreen(
 private fun PreviewCurrencyScreen() {
     GallowsGameTheme {
         MainScreen(
-            uiState = MainScreenUiState(alphabet = ('А'..'Я').toList())
+            uiState = MainScreenUiState(alphabet = ('А'..'Я').toList(), word = "ЯБЛОКО")
         )
     }
 }

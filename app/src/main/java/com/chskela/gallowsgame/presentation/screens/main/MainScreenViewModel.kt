@@ -23,10 +23,9 @@ class MainScreenViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val alphabet: List<Char> = ('А'..'Я').toList()
+    private val initState = MainScreenUiState(alphabet = alphabet)
 
-    private val _uiState = MutableStateFlow(
-        MainScreenUiState(alphabet = alphabet)
-    )
+    private val _uiState = MutableStateFlow(initState)
     val uiState = _uiState.asStateFlow()
 
     init {
@@ -39,12 +38,17 @@ class MainScreenViewModel @Inject constructor(
                 val newUsedLetters = _uiState.value.usedLetters + event.char
 
                 if (_uiState.value.word.contains(event.char)) {
-                    val newMask = updateMask(_uiState.value.mask, _uiState.value.word, event.char)
+                    val newMask = updateMask(
+                        mask = _uiState.value.mask,
+                        word = _uiState.value.word,
+                        letter = event.char
+                    )
 
                     _uiState.update {
                         _uiState.value.copy(
+                            isWin = _uiState.value.word == newMask,
                             mask = newMask,
-                            usedLetters = newUsedLetters
+                            usedLetters = newUsedLetters,
                         )
                     }
 
@@ -69,7 +73,7 @@ class MainScreenViewModel @Inject constructor(
                     val word = getRandomWordUseCase()
                     launch(Dispatchers.Main) {
                         _uiState.update {
-                            it.copy(word = word, mask = word.wordToMask())
+                            initState.copy(word = word, mask = word.wordToMask())
                         }
                     }
                 }
