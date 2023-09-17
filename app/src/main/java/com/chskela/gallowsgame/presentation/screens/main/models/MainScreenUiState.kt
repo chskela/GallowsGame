@@ -3,7 +3,7 @@ package com.chskela.gallowsgame.presentation.screens.main.models
 import com.chskela.gallowsgame.utils.wordToMask
 
 data class MainScreenUiState(
-    val word: String = "мама",
+    val word: String = "",
     val mask: String = word.wordToMask(),
     val attempts: Int = 0,
     val alphabet: List<Char> = listOf(),
