@@ -18,7 +18,7 @@ class DataModule {
     @Provides
     @Singleton
     fun getWordStore(@ApplicationContext appContext: Context): WordStore {
-        return WordStore("singular.txt", appContext)
+        return WordStore(context = appContext)
     }
 
     @Provides

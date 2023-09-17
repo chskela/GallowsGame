@@ -1,4 +1,4 @@
-package com.chskela.gallowsgame.data
+package com.chskela.gallowsgame.data.words
 
 import com.chskela.gallowsgame.domain.words.WordsRepository
 

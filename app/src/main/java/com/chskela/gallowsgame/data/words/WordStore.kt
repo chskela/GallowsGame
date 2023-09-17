@@ -1,10 +1,10 @@
-package com.chskela.gallowsgame.data
+package com.chskela.gallowsgame.data.words
 
 import android.content.Context
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-class WordStore(pathFile: String, private val context: Context) {
+class WordStore(pathFile: String = "singular.txt", private val context: Context) {
 
     private var listOfWords: List<String> = readFile(pathFile)
 
