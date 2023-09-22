@@ -18,10 +18,12 @@ fun KeyboardGrid(
         content = content
     ) { measurables, constraints ->
         val placeables = measurables.map { it.measure(constraints) }
-        val ratio = constraints.maxWidth / placeables[0].width
-        val padding = (constraints.maxWidth - placeables[0].width * ratio) / (ratio - 1)
+        val widthItem = placeables[0].width
+        val maxWidth = constraints.maxWidth
+        val ratio = maxWidth / widthItem
+        val padding = (maxWidth - widthItem * ratio) / (ratio - 1)
         layout(
-            width = placeables[0].width * ratio + padding * (ratio - 1),
+            width = widthItem * ratio + padding * (ratio - 1),
             height = (placeables[0].height + padding) * ceil(placeables.size.toDouble() / ratio).toInt()
         ) {
             var xPosition = 0

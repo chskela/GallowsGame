@@ -24,7 +24,12 @@ fun Key(
 ) {
 
     AssistChip(
-        modifier = modifier.sizeIn(50.dp, 32.dp, 90.dp, 32.dp),
+        modifier = modifier.sizeIn(
+            minWidth = 50.dp,
+            minHeight = 48.dp,
+            maxWidth = 90.dp,
+            maxHeight = 48.dp
+        ),
         enabled = enabled,
         onClick = onClick,
         label = {

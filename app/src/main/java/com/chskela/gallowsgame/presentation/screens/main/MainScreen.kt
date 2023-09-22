@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -53,11 +55,16 @@ fun MainScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Spacer(modifier = Modifier.height(32.dp))
 
-            Mask(mask = uiState.mask)
-
-            Spacer(modifier = Modifier.height(32.dp))
+            Column {
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = "Ошибки: ${uiState.attempts}",
+                    style = MaterialTheme.typography.displaySmall
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Mask(mask = uiState.mask)
+            }
 
             if (uiState.alphabet.isNotEmpty()) {
                 KeyboardGrid {
