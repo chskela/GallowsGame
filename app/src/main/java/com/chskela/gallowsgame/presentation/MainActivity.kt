@@ -16,8 +16,16 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val mainScreenViewModel:MainScreenViewModel by viewModels()
+            val mainScreenViewModel: MainScreenViewModel by viewModels()
             val uiState by mainScreenViewModel.uiState.collectAsState()
+
+//            val configuration = LocalConfiguration.current
+//
+//            if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//                // landscape mode
+//            } else if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+//                // portrait mode
+//            }
             GallowsGameTheme {
                 MainScreen(
                     uiState = uiState,

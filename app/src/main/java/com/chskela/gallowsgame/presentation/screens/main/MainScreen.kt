@@ -55,17 +55,15 @@ fun MainScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-
             Column {
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Ошибки: ${uiState.attempts}",
+                    text = stringResource(R.string.attempts, uiState.attempts),
                     style = MaterialTheme.typography.displaySmall
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Mask(mask = uiState.mask)
             }
-
             if (uiState.alphabet.isNotEmpty()) {
                 KeyboardGrid {
                     uiState.alphabet.map { letter ->
@@ -84,10 +82,20 @@ fun MainScreen(
 @Preview(showBackground = true, name = "Light CurrencyScreen", showSystemUi = true)
 @Preview(showBackground = true, showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-private fun PreviewCurrencyScreen() {
+private fun PreviewMainScreen() {
     GallowsGameTheme {
         MainScreen(
-            uiState = MainScreenUiState(alphabet = ('А'..'Я').toList(), word = "ЯБЛОКО")
+            uiState = MainScreenUiState(alphabet = ('А'..'Я').toList(), word = "ввваввапвапвпрв")
+        )
+    }
+}
+@Preview(showBackground = true, name = "Light CurrencyScreen", showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+private fun PreviewMainScreenShort() {
+    GallowsGameTheme {
+        MainScreen(
+            uiState = MainScreenUiState(alphabet = ('А'..'Я').toList(), word = "вв")
         )
     }
 }

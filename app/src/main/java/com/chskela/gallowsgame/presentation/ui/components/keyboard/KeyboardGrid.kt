@@ -21,7 +21,7 @@ fun KeyboardGrid(
         val widthItem = placeables[0].width
         val maxWidth = constraints.maxWidth
         val ratio = maxWidth / widthItem
-        val padding = (maxWidth - widthItem * ratio) / (ratio - 1)
+        val padding = (maxWidth - widthItem * ratio) / (ratio - 1).coerceAtLeast(1)
         layout(
             width = widthItem * ratio + padding * (ratio - 1),
             height = (placeables[0].height + padding) * ceil(placeables.size.toDouble() / ratio).toInt()
@@ -44,27 +44,12 @@ fun KeyboardGrid(
 @Preview(showBackground = true, showSystemUi = true)
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, showSystemUi = true)
 @Composable
-fun PreviewCategoryGrid() {
+fun PreviewKeyboardGrid() {
     GallowsGameTheme {
         KeyboardGrid {
-            listOf(
-                Key(letter = 'F', enabled = true),
-                Key(letter = 'F', enabled = true),
-                Key(letter = 'F', enabled = true),
-                Key(letter = 'F', enabled = true),
-                Key(letter = 'F', enabled = true),
-                Key(letter = 'F', enabled = true),
-                Key(letter = 'F', enabled = true),
-                Key(letter = 'F', enabled = true),
-                Key(letter = 'F', enabled = true),
-                Key(letter = 'F', enabled = true),
-                Key(letter = 'F', enabled = true),
-                Key(letter = 'F', enabled = true),
-                Key(letter = 'F', enabled = true),
-                Key(letter = 'F', enabled = true),
-                Key(letter = 'F', enabled = true),
-                Key(letter = 'F', enabled = true),
-            )
+            ('А'..'Я').map {
+                Key(letter = it, enabled = true)
+            }
         }
     }
 }

@@ -12,7 +12,7 @@ import dagger.hilt.android.components.ViewModelComponent
 class SettingsDomainModule {
 
     @Provides
-    fun provideGetMaxNumberOfErrorsUseCase(settingsRepository: SettingsRepository): GetMaxNumberOfErrorsUseCase{
+    fun provideGetMaxNumberOfErrorsUseCase(settingsRepository: SettingsRepository): GetMaxNumberOfErrorsUseCase {
         return GetMaxNumberOfErrorsUseCase(settingsRepository)
     }
 }

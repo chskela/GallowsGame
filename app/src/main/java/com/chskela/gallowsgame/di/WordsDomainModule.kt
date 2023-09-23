@@ -12,7 +12,7 @@ import dagger.hilt.android.components.ViewModelComponent
 class WordsDomainModule {
 
     @Provides
-    fun provideGetRandomWordUseCase(wordsRepository: WordsRepository): GetRandomWordUseCase{
+    fun provideGetRandomWordUseCase(wordsRepository: WordsRepository): GetRandomWordUseCase {
         return GetRandomWordUseCase(wordsRepository = wordsRepository)
     }
 }
