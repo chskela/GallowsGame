@@ -2,6 +2,7 @@ package com.chskela.gallowsgame.presentation.ui.components.keyboard
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.AssistChip
@@ -24,12 +25,12 @@ fun Key(
 ) {
 
     AssistChip(
-        modifier = modifier.sizeIn(
-            minWidth = 50.dp,
-            minHeight = 48.dp,
-            maxWidth = 90.dp,
-            maxHeight = 48.dp
-        ),
+        modifier = modifier
+            .height(32.dp)
+            .sizeIn(
+                minWidth = 50.dp,
+                maxWidth = 90.dp,
+            ),
         enabled = enabled,
         onClick = onClick,
         label = {
@@ -41,14 +42,6 @@ fun Key(
                 textAlign = TextAlign.Center
             )
         },
-//        leadingIcon = {
-//            Icon(
-//                Icons.Filled.Settings,
-//                contentDescription = "Localized description",
-//                Modifier.size(AssistChipDefaults.IconSize)
-//            )
-//        }
-
     )
 }
 

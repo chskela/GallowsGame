@@ -3,6 +3,7 @@ package com.chskela.gallowsgame.presentation.screens.main
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -55,23 +56,28 @@ fun MainScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Column {
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = stringResource(R.string.attempts, uiState.attempts),
-                    style = MaterialTheme.typography.displaySmall
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Mask(mask = uiState.mask)
+            Row( modifier = Modifier.weight(0.5f)) {
+                Column {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = stringResource(R.string.attempts, uiState.attempts),
+                        style = MaterialTheme.typography.displaySmall
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Mask(mask = uiState.mask)
+                }
             }
-            if (uiState.alphabet.isNotEmpty()) {
-                KeyboardGrid {
-                    uiState.alphabet.map { letter ->
-                        val isUsed = uiState.usedLetters.contains(letter)
-                        Key(
-                            letter = letter,
-                            enabled = !isUsed,
-                            onClick = { onEvent(MainScreenEvent.InputChar(letter)) })
+            Row( modifier = Modifier.weight(0.5f),
+                verticalAlignment = Alignment.Bottom)  {
+                if (uiState.alphabet.isNotEmpty()) {
+                    KeyboardGrid {
+                        uiState.alphabet.map { letter ->
+                            val isUsed = uiState.usedLetters.contains(letter)
+                            Key(
+                                letter = letter,
+                                enabled = !isUsed,
+                                onClick = { onEvent(MainScreenEvent.InputChar(letter)) })
+                        }
                     }
                 }
             }
