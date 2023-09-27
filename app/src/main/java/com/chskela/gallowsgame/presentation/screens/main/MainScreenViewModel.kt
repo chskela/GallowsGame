@@ -5,9 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.chskela.gallowsgame.domain.game.CheckIsGameOverUserCase
 import com.chskela.gallowsgame.domain.words.GetRandomWordUseCase
 import com.chskela.gallowsgame.presentation.screens.main.models.MainScreenUiState
+import com.chskela.gallowsgame.utils.Result
 import com.chskela.gallowsgame.utils.wordToMask
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -69,13 +69,31 @@ class MainScreenViewModel @Inject constructor(
             }
 
             MainScreenEvent.NewGame -> {
-                viewModelScope.launch(Dispatchers.IO) {
-                    val word = getRandomWordUseCase()
-                    launch(Dispatchers.Main) {
-                        _uiState.update {
-                            initState.copy(word = word, mask = word.wordToMask())
+                _uiState.update {
+                    initState.copy(
+                        isLoading = true
+                    )
+                }
+
+                viewModelScope.launch {
+                    val newState = when (val result = getRandomWordUseCase()) {
+                        is Result.Success -> {
+                            val word = result.data.uppercase()
+                            initState.copy(
+                                word = word,
+                                mask = word.wordToMask(),
+                                isLoading = false
+                            )
+                        }
+
+                        is Result.Error -> {
+                            initState.copy(
+                                error = "Что-то пошло не так",
+                                isLoading = false
+                            )
                         }
                     }
+                    _uiState.update { newState }
                 }
             }
         }

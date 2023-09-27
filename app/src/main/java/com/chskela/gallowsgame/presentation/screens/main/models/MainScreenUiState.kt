@@ -10,4 +10,6 @@ data class MainScreenUiState(
     val usedLetters: Set<Char> = setOf(),
     val isGameOver: Boolean = false,
     val isWin: Boolean = false,
+    val isLoading: Boolean = true,
+    val error: String? = null
 )
