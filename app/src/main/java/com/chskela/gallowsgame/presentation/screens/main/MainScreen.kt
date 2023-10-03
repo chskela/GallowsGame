@@ -1,7 +1,6 @@
 package com.chskela.gallowsgame.presentation.screens.main
 
 import android.content.res.Configuration
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,7 +11,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Refresh
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -53,9 +55,20 @@ fun MainScreen(
         }
     )
     Scaffold(topBar = {
-        GallowsTopAppBar(title = stringResource(id = R.string.app_name), navigationIcon = {
-            Spacer(modifier = Modifier.size(48.dp))
-        })
+        GallowsTopAppBar(
+            title = stringResource(id = R.string.app_name),
+            navigationIcon = {
+                Spacer(modifier = Modifier.size(48.dp))
+            },
+            actions = {
+                IconButton(onClick = {onEvent(MainScreenEvent.NewGame)}) {
+                    Icon(
+                        imageVector = Icons.Rounded.Refresh,
+                        contentDescription = stringResource(id = R.string.back),
+                        tint = MaterialTheme.colorScheme.secondary
+                    )
+                }
+            })
     }) { padding ->
         Column(
             modifier = Modifier
@@ -110,7 +123,7 @@ fun MainScreen(
                         }
                     }
                 }
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(8.dp))
             }
         }
     }
