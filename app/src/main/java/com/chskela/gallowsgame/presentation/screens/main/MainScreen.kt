@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.chskela.gallowsgame.R
 import com.chskela.gallowsgame.presentation.screens.main.models.MainScreenUiState
@@ -33,12 +34,15 @@ import com.chskela.gallowsgame.presentation.ui.components.keyboard.KeyboardGrid
 import com.chskela.gallowsgame.presentation.ui.components.mask.Mask
 import com.chskela.gallowsgame.presentation.ui.components.topappbar.GallowsTopAppBar
 import com.chskela.gallowsgame.presentation.ui.theme.GallowsGameTheme
+import com.chskela.gallowsgame.utils.WindowInfo
+import kotlin.math.ceil
+import kotlin.math.sqrt
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 fun MainScreen(
     uiState: MainScreenUiState,
     onEvent: (MainScreenEvent) -> Unit = {},
+    windowInfo: WindowInfo
 ) {
     val title = if (uiState.isGameOver) {
         stringResource(R.string.game_over)
@@ -54,6 +58,7 @@ fun MainScreen(
             onEvent(MainScreenEvent.NewGame)
         }
     )
+
     Scaffold(topBar = {
         GallowsTopAppBar(
             title = stringResource(id = R.string.app_name),
@@ -61,7 +66,7 @@ fun MainScreen(
                 Spacer(modifier = Modifier.size(48.dp))
             },
             actions = {
-                IconButton(onClick = {onEvent(MainScreenEvent.NewGame)}) {
+                IconButton(onClick = { onEvent(MainScreenEvent.NewGame) }) {
                     Icon(
                         imageVector = Icons.Rounded.Refresh,
                         contentDescription = stringResource(id = R.string.back),
@@ -112,12 +117,20 @@ fun MainScreen(
                     verticalAlignment = Alignment.Bottom
                 ) {
                     if (uiState.alphabet.isNotEmpty()) {
+                        val screenHeight = windowInfo.screenHeight / 2
+                        val screenWidth = windowInfo.screenWidth
+                        val proportion = screenWidth / screenHeight
+                        val countRow = ceil(sqrt(uiState.alphabet.size / proportion)).toInt() + 1
+                        val height = screenHeight / countRow
+                        val width = screenWidth / (countRow * proportion)
+
                         KeyboardGrid {
                             uiState.alphabet.map { letter ->
                                 val isUsed = uiState.usedLetters.contains(letter)
                                 Key(
                                     letter = letter,
                                     enabled = !isUsed,
+                                    size = DpSize(width = width, height = height),
                                     onClick = { onEvent(MainScreenEvent.InputChar(letter)) })
                             }
                         }
@@ -129,9 +142,14 @@ fun MainScreen(
     }
 }
 
-
-@Preview(showBackground = true, name = "Light CurrencyScreen", showSystemUi = true)
-@Preview(showBackground = true, showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(
+    showBackground = true, name = "Light CurrencyScreen", showSystemUi = true,
+    device = "spec:parent=pixel_xl,orientation=landscape"
+)
+@Preview(
+    showBackground = true, showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_YES,
+    device = "id:Nexus 10"
+)
 @Composable
 private fun PreviewMainScreen() {
     GallowsGameTheme {
@@ -139,8 +157,9 @@ private fun PreviewMainScreen() {
             uiState = MainScreenUiState(
                 alphabet = ('А'..'Я').toList(),
                 word = "ввваввапвапвпрв",
-                isLoading = true
-            )
+                isLoading = false
+            ),
+            windowInfo = WindowInfo(),
         )
     }
 }
@@ -154,7 +173,8 @@ private fun PreviewMainScreenShort() {
             uiState = MainScreenUiState(
                 alphabet = ('А'..'Я').toList(), word = "вв",
                 isLoading = false,
-            )
+            ),
+            windowInfo = WindowInfo(),
         )
     }
 }

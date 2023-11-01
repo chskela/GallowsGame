@@ -2,35 +2,33 @@ package com.chskela.gallowsgame.presentation.ui.components.keyboard
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.AssistChip
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.chskela.gallowsgame.presentation.ui.theme.GallowsGameTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Key(
     modifier: Modifier = Modifier,
     letter: Char,
     enabled: Boolean,
+    size: DpSize = DpSize(48.dp, 32.dp),
     onClick: () -> Unit = {}
 ) {
 
     AssistChip(
-        modifier = modifier
-            .height(32.dp)
-            .sizeIn(
-                minWidth = 50.dp,
-                maxWidth = 90.dp,
-            ),
+        modifier = modifier.size(
+            width = size.width,
+            height = size.height,
+        ),
         enabled = enabled,
         onClick = onClick,
         label = {
@@ -39,7 +37,8 @@ fun Key(
                     .fillMaxWidth()
                     .offset((-4).dp),
                 text = letter.toString(),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                fontSize = (size.height.value * 0.6).sp
             )
         },
     )

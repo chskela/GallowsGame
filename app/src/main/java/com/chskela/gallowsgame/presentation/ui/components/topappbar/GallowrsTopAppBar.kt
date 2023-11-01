@@ -54,22 +54,11 @@ fun GallowsTopAppBar(
     )
 }
 
-@Preview(showBackground = true, name = "Light MonoTopAppBar")
+@Preview(showBackground = true, name = "Light GallowsTopAppBar")
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun PreviewMonoTopAppBar() {
+fun PreviewGallowsTopAppBar() {
     GallowsGameTheme {
         GallowsTopAppBar(title = stringResource(id = R.string.app_name))
-    }
-}
-
-@Preview(showBackground = true, name = "Light MonoTopAppBar no Back")
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun PreviewMonoTopAppBarNoBack() {
-    GallowsGameTheme {
-        GallowsTopAppBar(title = stringResource(id = R.string.app_name), navigationIcon = {
-            Spacer(modifier = Modifier.size(48.dp))
-        })
     }
 }
