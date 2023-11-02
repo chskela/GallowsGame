@@ -35,8 +35,7 @@ import com.chskela.gallowsgame.presentation.ui.components.mask.Mask
 import com.chskela.gallowsgame.presentation.ui.components.topappbar.GallowsTopAppBar
 import com.chskela.gallowsgame.presentation.ui.theme.GallowsGameTheme
 import com.chskela.gallowsgame.utils.WindowInfo
-import kotlin.math.ceil
-import kotlin.math.sqrt
+import com.chskela.gallowsgame.utils.calculateSizeItem
 
 @Composable
 fun MainScreen(
@@ -117,12 +116,7 @@ fun MainScreen(
                     verticalAlignment = Alignment.Bottom
                 ) {
                     if (uiState.alphabet.isNotEmpty()) {
-                        val screenHeight = windowInfo.screenHeight / 2
-                        val screenWidth = windowInfo.screenWidth
-                        val proportion = screenWidth / screenHeight
-                        val countRow = ceil(sqrt(uiState.alphabet.size / proportion)).toInt() + 1
-                        val height = screenHeight / countRow
-                        val width = screenWidth / (countRow * proportion)
+                        val (height, width) = calculateSizeItem(windowInfo, uiState.alphabet.size)
 
                         KeyboardGrid {
                             uiState.alphabet.map { letter ->
