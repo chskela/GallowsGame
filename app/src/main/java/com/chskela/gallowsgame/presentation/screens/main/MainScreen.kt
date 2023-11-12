@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
@@ -65,6 +66,16 @@ fun MainScreen(
                 Spacer(modifier = Modifier.size(48.dp))
             },
             actions = {
+                IconButton(
+                    onClick = { onEvent(MainScreenEvent.Hint) },
+                    enabled = uiState.isHintEnable,
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.round_help_outline_24),
+                        contentDescription = stringResource(id = R.string.hint),
+                        tint = MaterialTheme.colorScheme.secondary
+                    )
+                }
                 IconButton(onClick = { onEvent(MainScreenEvent.NewGame) }) {
                     Icon(
                         imageVector = Icons.Rounded.Refresh,

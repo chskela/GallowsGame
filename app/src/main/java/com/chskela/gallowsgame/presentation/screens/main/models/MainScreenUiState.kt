@@ -8,6 +8,7 @@ data class MainScreenUiState(
     val attempts: Int = 0,
     val alphabet: List<Char> = listOf(),
     val usedLetters: Set<Char> = setOf(),
+    val isHintEnable: Boolean = true,
     val isGameOver: Boolean = false,
     val isWin: Boolean = false,
     val isLoading: Boolean = true,

@@ -28,6 +28,8 @@ class MainScreenViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(initState)
     val uiState = _uiState.asStateFlow()
 
+    private val setForHint = MutableStateFlow(emptySet<Char>())
+
     init {
         onEvent(MainScreenEvent.NewGame)
     }
@@ -35,18 +37,22 @@ class MainScreenViewModel @Inject constructor(
     fun onEvent(event: MainScreenEvent) {
         when (event) {
             is MainScreenEvent.InputChar -> {
-                val newUsedLetters = _uiState.value.usedLetters + event.char
+                val inputLetter = event.char
+                val word = _uiState.value.word
+                val newUsedLetters = _uiState.value.usedLetters + inputLetter
 
-                if (_uiState.value.word.contains(event.char)) {
+                if (word.contains(inputLetter)) {
+                    updateSetForHint(inputLetter)
+
                     val newMask = updateMask(
                         mask = _uiState.value.mask,
-                        word = _uiState.value.word,
-                        letter = event.char
+                        word = word,
+                        letter = inputLetter
                     )
 
                     _uiState.update {
-                        _uiState.value.copy(
-                            isWin = _uiState.value.word == newMask,
+                        it.copy(
+                            isWin = word == newMask,
                             mask = newMask,
                             usedLetters = newUsedLetters,
                         )
@@ -58,7 +64,7 @@ class MainScreenViewModel @Inject constructor(
                     checkIsGameOverUserCase(newAttempts)
                         .onEach { isGameOver ->
                             _uiState.update {
-                                _uiState.value.copy(
+                                it.copy(
                                     isGameOver = isGameOver,
                                     attempts = newAttempts,
                                     usedLetters = newUsedLetters
@@ -94,8 +100,33 @@ class MainScreenViewModel @Inject constructor(
                         }
                     }
                     _uiState.update { newState }
+                    initSetForHint()
                 }
             }
+
+            MainScreenEvent.Hint -> {
+                if (setForHint.value.isNotEmpty()) {
+                    _uiState.update {
+                        it.copy(
+                            isHintEnable = false
+                        )
+                    }
+                    val hintLetter = setForHint.value.random()
+                    onEvent(MainScreenEvent.InputChar(hintLetter))
+                }
+            }
+        }
+    }
+
+    private fun initSetForHint() {
+        setForHint.update {
+            _uiState.value.word.toSet()
+        }
+    }
+
+    private fun updateSetForHint(letter: Char) {
+        setForHint.update {
+            it.minus(letter)
         }
     }
 

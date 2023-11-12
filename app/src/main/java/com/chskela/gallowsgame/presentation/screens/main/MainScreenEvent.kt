@@ -4,4 +4,6 @@ sealed class MainScreenEvent {
     data class InputChar(val char: Char) : MainScreenEvent()
 
     object NewGame : MainScreenEvent()
+
+    object Hint : MainScreenEvent()
 }

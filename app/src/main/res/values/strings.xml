@@ -6,4 +6,5 @@
     <string name="win">Поздравляю, Вы победили!!!</string>
     <string name="attempts">Ошибки: %1$s</string>
     <string name="back">Назад</string>
+    <string name="hint">Подсказка</string>
 </resources>
