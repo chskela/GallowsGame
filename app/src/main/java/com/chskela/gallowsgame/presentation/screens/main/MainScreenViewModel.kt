@@ -1,25 +1,28 @@
 package com.chskela.gallowsgame.presentation.screens.main
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chskela.gallowsgame.domain.game.CheckIsGameOverUserCase
+import com.chskela.gallowsgame.domain.settings.GetNumberOfHintsUseCase
 import com.chskela.gallowsgame.domain.words.GetRandomWordUseCase
 import com.chskela.gallowsgame.presentation.screens.main.models.MainScreenUiState
-import com.chskela.gallowsgame.utils.Result
 import com.chskela.gallowsgame.utils.wordToMask
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
     private val getRandomWordUseCase: GetRandomWordUseCase,
-    private val checkIsGameOverUserCase: CheckIsGameOverUserCase
+    private val checkIsGameOverUserCase: CheckIsGameOverUserCase,
+    private val getNumberOfHintsUseCase: GetNumberOfHintsUseCase
 ) : ViewModel() {
 
     private val alphabet: List<Char> = ('А'..'Я').toList()
@@ -80,35 +83,37 @@ class MainScreenViewModel @Inject constructor(
                         isLoading = true
                     )
                 }
+                combine(getRandomWordUseCase(), getNumberOfHintsUseCase()) { word, hints ->
 
-                viewModelScope.launch {
-                    val newState = when (val result = getRandomWordUseCase()) {
-                        is Result.Success -> {
-                            val word = result.data.uppercase()
-                            initState.copy(
-                                word = word,
-                                mask = word.wordToMask(),
-                                isLoading = false
-                            )
-                        }
-
-                        is Result.Error -> {
+                    Log.e("TEST", "getRandomWordUseCase: $word")
+                    val newWord = word.uppercase()
+                    _uiState.update {
+                        initState.copy(
+                            word = newWord,
+                            mask = newWord.wordToMask(),
+                            hints = hints,
+                            isLoading = false
+                        )
+                    }
+                    initSetForHint()
+                }
+                    .catch {
+                        _uiState.update {
                             initState.copy(
                                 error = "Что-то пошло не так",
                                 isLoading = false
                             )
                         }
-                    }
-                    _uiState.update { newState }
-                    initSetForHint()
-                }
+                    }.launchIn(viewModelScope)
             }
 
             MainScreenEvent.Hint -> {
                 if (setForHint.value.isNotEmpty()) {
                     _uiState.update {
+                        val newHints = it.hints - 1
                         it.copy(
-                            isHintEnable = false
+                            hints = newHints,
+                            isHintEnable = newHints > 0
                         )
                     }
                     val hintLetter = setForHint.value.random()

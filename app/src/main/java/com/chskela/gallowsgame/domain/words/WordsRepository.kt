@@ -1,7 +1,7 @@
 package com.chskela.gallowsgame.domain.words
 
-import com.chskela.gallowsgame.utils.Result
+import kotlinx.coroutines.flow.Flow
 
 interface WordsRepository {
-    suspend fun getRandomWord(): Result<String>
+    fun getRandomWord(): Flow<String>
 }

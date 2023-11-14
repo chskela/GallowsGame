@@ -111,10 +111,20 @@ fun MainScreen(
                     } else {
                         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                             Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = stringResource(R.string.attempts, uiState.attempts),
-                                style = MaterialTheme.typography.displaySmall
-                            )
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.attempts, uiState.attempts),
+                                    style = MaterialTheme.typography.headlineMedium
+                                )
+                                Text(
+                                    text = stringResource(R.string.hints, uiState.hints),
+                                    style = MaterialTheme.typography.headlineMedium
+                                )
+
+                            }
                             Spacer(modifier = Modifier.height(16.dp))
                             Mask(mask = uiState.mask)
                         }

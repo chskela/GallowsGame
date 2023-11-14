@@ -14,7 +14,9 @@ class SettingsStore(private val context: Context) {
 
     companion object {
         private const val MAX_NUMBER_OF_ERRORS = "MAX_NUMBER_OF_ERRORS"
+        private const val NUMBER_OF_HINTS = "NUMBER_OF_HINTS"
         private val MAX_NUMBER_OF_ERRORS_KEY = intPreferencesKey(MAX_NUMBER_OF_ERRORS)
+        private val NUMBER_OF_HINTS_KEY = intPreferencesKey(NUMBER_OF_HINTS)
         private val Context.dataStore by preferencesDataStore("settings")
     }
 
@@ -36,4 +38,21 @@ class SettingsStore(private val context: Context) {
         }
     }
 
+    val numberOfHints: Flow<Int> = context.dataStore.data
+        .catch { exception ->
+            if (exception is IOException) {
+                emit(emptyPreferences())
+            } else {
+                throw exception
+            }
+        }
+        .map { preferences ->
+            preferences[NUMBER_OF_HINTS_KEY] ?: Settings.NUMBER_OF_HINTS
+        }
+
+    suspend fun setNumberOfHints(value: Int) {
+        context.dataStore.edit { preferences ->
+            preferences[NUMBER_OF_HINTS_KEY] = value
+        }
+    }
 }

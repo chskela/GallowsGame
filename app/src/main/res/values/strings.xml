@@ -5,6 +5,7 @@
     <string name="hidden_word">Загаданное слово:\n%1$s</string>
     <string name="win">Поздравляю, Вы победили!!!</string>
     <string name="attempts">Ошибки: %1$s</string>
+    <string name="hints">Подсказки: %1$s</string>
     <string name="back">Назад</string>
     <string name="hint">Подсказка</string>
 </resources>
