@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">Виселица</string>
-    <string name="game_over">К сожалению,\nВы проиграли!!!</string>
-    <string name="new_game">Новая игра</string>
-    <string name="hidden_word">Загаданное слово:\n%1$s</string>
-    <string name="win">Поздравляю, Вы победили!!!</string>
-    <string name="attempts">Ошибки: %1$s</string>
-    <string name="hints">Подсказки: %1$s</string>
-    <string name="back">Назад</string>
-    <string name="hint">Подсказка</string>
+    <string name="app_name">Gallows</string>
+    <string name="new_game">New game</string>
+    <string name="hidden_word">The hidden word: %1$s</string>
+    <string name="win">Congratulations, you have won!!!</string>
+    <string name="attempts">Errors: %1$s</string>
+    <string name="hints">Hints: %1$s</string>
+    <string name="back">Back</string>
+    <string name="hint">Hint</string>
+    <string name="game_over">Unfortunately, you have lost!!!</string>
 </resources>
