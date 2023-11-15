@@ -142,9 +142,12 @@ fun MainScreen(
                         KeyboardGrid {
                             uiState.alphabet.map { letter ->
                                 val isUsed = uiState.usedLetters.contains(letter)
+                                val isCorrectLetter = uiState.word.contains(letter)
+
                                 Key(
                                     letter = letter,
                                     enabled = !isUsed,
+                                    isCorrectLetter = isCorrectLetter,
                                     size = DpSize(width = width, height = height),
                                     onClick = { onEvent(MainScreenEvent.InputChar(letter)) })
                             }

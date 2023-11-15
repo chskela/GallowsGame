@@ -20,19 +20,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.chskela.gallowsgame.presentation.ui.theme.GallowsGameTheme
+import com.chskela.gallowsgame.utils.animation.shake.rememberShakeController
+import com.chskela.gallowsgame.utils.animation.shake.shake
 
 @Composable
 fun Mask(modifier: Modifier = Modifier, mask: String) {
     BoxWithConstraints(modifier = modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
         val sizeItem = ((maxWidth - 6.dp * (mask.length - 1)) / mask.length)
-//            .coerceAtMost(64.dp)
+        val shakeController = rememberShakeController()
         Row(horizontalArrangement = Arrangement.Center) {
             mask.mapIndexed { index, letter ->
                 Box(
                     modifier = Modifier
                         .sizeIn(maxWidth = sizeItem)
                         .aspectRatio(1f)
-                        .background(color = MaterialTheme.colorScheme.primary),
+                        .background(color = MaterialTheme.colorScheme.primary)
+                        .shake(shakeController),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(

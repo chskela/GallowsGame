@@ -48,7 +48,7 @@ fun PreviewKeyboardGrid() {
     GallowsGameTheme {
         KeyboardGrid {
             ('А'..'Я').map {
-                Key(letter = it, enabled = true)
+                Key(letter = it, enabled = true, isCorrectLetter = true)
             }
         }
     }
