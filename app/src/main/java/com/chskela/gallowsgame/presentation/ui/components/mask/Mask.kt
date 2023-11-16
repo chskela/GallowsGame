@@ -6,10 +6,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -19,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.chskela.gallowsgame.presentation.ui.components.spacers.HorizontalSpacer4Dp
 import com.chskela.gallowsgame.presentation.ui.theme.GallowsGameTheme
 import com.chskela.gallowsgame.utils.animation.shake.rememberShakeController
 import com.chskela.gallowsgame.utils.animation.shake.shake
@@ -45,7 +44,7 @@ fun Mask(modifier: Modifier = Modifier, mask: String) {
                     )
                 }
                 if (index != mask.lastIndex) {
-                    Spacer(modifier = Modifier.size(4.dp))
+                    HorizontalSpacer4Dp()
                 }
             }
         }
