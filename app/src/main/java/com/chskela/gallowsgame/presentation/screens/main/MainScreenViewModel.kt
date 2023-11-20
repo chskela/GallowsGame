@@ -1,6 +1,5 @@
 package com.chskela.gallowsgame.presentation.screens.main
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chskela.gallowsgame.domain.game.CheckIsGameOverUserCase
@@ -85,7 +84,6 @@ class MainScreenViewModel @Inject constructor(
                 }
                 combine(getRandomWordUseCase(), getNumberOfHintsUseCase()) { word, hints ->
 
-                    Log.e("TEST", "getRandomWordUseCase: $word")
                     val newWord = word.uppercase()
                     _uiState.update {
                         initState.copy(

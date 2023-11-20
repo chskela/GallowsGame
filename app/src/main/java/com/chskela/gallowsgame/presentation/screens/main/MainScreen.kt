@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.chskela.gallowsgame.R
 import com.chskela.gallowsgame.presentation.screens.main.models.MainScreenUiState
 import com.chskela.gallowsgame.presentation.ui.components.error.Error
+import com.chskela.gallowsgame.presentation.ui.components.gallowsview.ImageOfGallows
 import com.chskela.gallowsgame.presentation.ui.components.gameoverdialog.GameDialog
 import com.chskela.gallowsgame.presentation.ui.components.icons.HintIcon
 import com.chskela.gallowsgame.presentation.ui.components.icons.RefreshIcon
@@ -85,7 +86,7 @@ fun MainScreen(
             if (uiState.error != null) {
                 Error(error = uiState.error)
             } else {
-                Row(modifier = Modifier.weight(0.5f)) {
+                Row(modifier = Modifier.weight(0.6f)) {
                     if (uiState.isLoading) {
                         LinearProgressIndicator(
                             modifier = Modifier
@@ -93,7 +94,11 @@ fun MainScreen(
                                 .height(4.dp)
                         )
                     } else {
-                        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                        Column(
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp)
+                                .weight(0.2f)
+                        ) {
                             VerticalSpacer8Dp()
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
@@ -109,19 +114,19 @@ fun MainScreen(
                                 )
                             }
                             VerticalSpacer8Dp()
-                            Mask(mask = uiState.mask)
+                            Mask(modifier = Modifier.weight(0.2f), mask = uiState.mask)
+                            ImageOfGallows(modifier = Modifier.weight(0.6f))
                         }
                     }
                 }
                 Row(
                     modifier = Modifier
-                        .weight(0.5f)
+                        .weight(0.4f)
                         .padding(horizontal = 16.dp),
                     verticalAlignment = Alignment.Bottom
                 ) {
                     if (uiState.alphabet.isNotEmpty()) {
                         val size = calculateSizeItem(windowInfo, uiState.alphabet.size)
-
                         KeyboardGrid {
                             uiState.alphabet.map { letter ->
                                 val isUsed = uiState.usedLetters.contains(letter)
