@@ -8,7 +8,8 @@ fun calculateSizeItem(windowInfo: WindowInfo, size: Int): DpSize {
     val screenHeight = windowInfo.screenHeight / 2
     val screenWidth = windowInfo.screenWidth
     val proportion = screenWidth / screenHeight
-    val countRow = ceil(sqrt(size / proportion)).toInt() + 1
+    val sqrt = sqrt(size / proportion)
+    val countRow = (if (sqrt == ceil(sqrt)) sqrt else sqrt + 1).toInt() + 2
     val height = screenHeight / countRow
     val width = screenWidth / (countRow * proportion)
     return DpSize(height, width)
