@@ -11,21 +11,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chskela.gallowsgame.presentation.ui.theme.GallowsGameTheme
 
 @Composable
-fun ImageOfGallows(modifier: Modifier = Modifier) {
+fun ImageOfGallows(modifier: Modifier = Modifier, stage: Int) {
+    val color = MaterialTheme.colorScheme.onBackground
+
     Canvas(
         modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        val color = Color.Black
-
         val height = size.height
         val baseWidth = height * 0.8f
         val topOfPost = height * 0.1f
@@ -47,107 +46,124 @@ fun ImageOfGallows(modifier: Modifier = Modifier) {
         val paddingLegs = sizeOval.width / 3
 
         // Base
-        drawLine(
-            color = color,
-            start = Offset(center.x - baseWidth / 2, height - strokeWidthBase),
-            end = Offset(center.x + baseWidth / 2, height - strokeWidthBase),
-            strokeWidth = strokeWidthBase
-        )
+        if (stage >= 1) {
+            drawLine(
+                color = color,
+                start = Offset(center.x - baseWidth / 2, height - strokeWidthBase),
+                end = Offset(center.x + baseWidth / 2, height - strokeWidthBase),
+                strokeWidth = strokeWidthBase
+            )
+        }
+
         //Post
-        drawLine(
-            color = color,
-            start = Offset(center.x - baseWidth / 4, height - strokeWidthBase),
-            end = Offset(center.x - baseWidth / 4, topOfPost),
-            strokeWidth = strokeWidthPost
-        )
+        if (stage >= 2) {
+            drawLine(
+                color = color,
+                start = Offset(center.x - baseWidth / 4, height - strokeWidthBase),
+                end = Offset(center.x - baseWidth / 4, topOfPost),
+                strokeWidth = strokeWidthPost
+            )
+        }
 
         // Crossbar
-        drawLine(
-            color = color,
-            start = Offset(center.x - baseWidth / 4, topOfPost + strokeWidthCrossbar / 2),
-            end = Offset(center.x + baseWidth / 4, topOfPost + strokeWidthCrossbar / 2),
-            strokeWidth = strokeWidthCrossbar
-        )
+        if (stage >= 3) {
+            drawLine(
+                color = color,
+                start = Offset(center.x - baseWidth / 4, topOfPost + strokeWidthCrossbar / 2),
+                end = Offset(center.x + baseWidth / 4, topOfPost + strokeWidthCrossbar / 2),
+                strokeWidth = strokeWidthCrossbar
+            )
+        }
 
         // Rope
-        drawLine(
-            color = color,
-            start = Offset(center.x + baseWidth / 4 - paddingRope, topOfPost - strokeWidthRope),
-            end = Offset(center.x + baseWidth / 4 - paddingRope, topOfPost + lengthRope),
-            strokeWidth = strokeWidthRope
-        )
+        if (stage >= 4) {
+            drawLine(
+                color = color,
+                start = Offset(center.x + baseWidth / 4 - paddingRope, topOfPost - strokeWidthRope),
+                end = Offset(center.x + baseWidth / 4 - paddingRope, topOfPost + lengthRope),
+                strokeWidth = strokeWidthRope
+            )
+        }
 
         // Head
-        drawCircle(
-            color = color,
-            radius = radiusHead,
-            center = Offset(
-                center.x + baseWidth / 4 - paddingRope,
-                topOfPost + lengthRope + radiusHead
-            ),
-            style = Stroke(5f)
-        )
+        if (stage >= 5) {
+            drawCircle(
+                color = color,
+                radius = radiusHead,
+                center = Offset(
+                    center.x + baseWidth / 4 - paddingRope,
+                    topOfPost + lengthRope + radiusHead
+                ),
+                style = Stroke(5f)
+            )
+        }
 
         // Body
-        drawOval(
-            color = color, topLeft = Offset(
-                center.x + baseWidth / 4 - paddingRope - sizeOval.width / 2,
-                topOfPost + lengthRope + radiusHead * 2
-            ), size = sizeOval
-        )
+        if (stage >= 6) {
+            drawOval(
+                color = color, topLeft = Offset(
+                    center.x + baseWidth / 4 - paddingRope - sizeOval.width / 2,
+                    topOfPost + lengthRope + radiusHead * 2
+                ), size = sizeOval
+            )
+        }
 
         // Hands
-        drawLine(
-            color = color,
-            start = Offset(
-                center.x + baseWidth / 4 - paddingRope,
-                topOfPost + lengthRope + radiusHead * 2
-            ),
-            end = Offset(
-                center.x + baseWidth / 4 - paddingRope - sizeOval.width,
-                topOfPost + lengthRope + radiusHead * 2 + lengthHands
-            ),
-            strokeWidth = strokeWidthHands
-        )
-        drawLine(
-            color = color,
-            start = Offset(
-                center.x + baseWidth / 4 - paddingRope,
-                topOfPost + lengthRope + radiusHead * 2
-            ),
-            end = Offset(
-                center.x + baseWidth / 4 - paddingRope + sizeOval.width,
-                topOfPost + lengthRope + radiusHead * 2 + lengthHands
-            ),
-            strokeWidth = strokeWidthHands
-        )
+        if (stage >= 7) {
+            drawLine(
+                color = color,
+                start = Offset(
+                    center.x + baseWidth / 4 - paddingRope,
+                    topOfPost + lengthRope + radiusHead * 2
+                ),
+                end = Offset(
+                    center.x + baseWidth / 4 - paddingRope - sizeOval.width,
+                    topOfPost + lengthRope + radiusHead * 2 + lengthHands
+                ),
+                strokeWidth = strokeWidthHands
+            )
+            drawLine(
+                color = color,
+                start = Offset(
+                    center.x + baseWidth / 4 - paddingRope,
+                    topOfPost + lengthRope + radiusHead * 2
+                ),
+                end = Offset(
+                    center.x + baseWidth / 4 - paddingRope + sizeOval.width,
+                    topOfPost + lengthRope + radiusHead * 2 + lengthHands
+                ),
+                strokeWidth = strokeWidthHands
+            )
+        }
 
         // Legs
+        if (stage >= 8) {
+            drawLine(
+                color = color,
+                start = Offset(
+                    center.x + baseWidth / 4 - paddingRope - paddingLegs,
+                    topOfPost + lengthRope + radiusHead + sizeOval.height
+                ),
+                end = Offset(
+                    center.x + baseWidth / 4 - paddingRope - paddingLegs,
+                    topOfPost + lengthRope + radiusHead + sizeOval.height + lengthLegs
+                ),
+                strokeWidth = strokeWidthLegs
+            )
+            drawLine(
+                color = color,
+                start = Offset(
+                    center.x + baseWidth / 4 - paddingRope + paddingLegs,
+                    topOfPost + lengthRope + radiusHead + sizeOval.height
+                ),
+                end = Offset(
+                    center.x + baseWidth / 4 - paddingRope + paddingLegs,
+                    topOfPost + lengthRope + radiusHead + sizeOval.height + lengthLegs
+                ),
+                strokeWidth = strokeWidthLegs
+            )
+        }
 
-        drawLine(
-            color = color,
-            start = Offset(
-                center.x + baseWidth / 4 - paddingRope - paddingLegs,
-                topOfPost + lengthRope + radiusHead + sizeOval.height
-            ),
-            end = Offset(
-                center.x + baseWidth / 4 - paddingRope - paddingLegs,
-                topOfPost + lengthRope + radiusHead + sizeOval.height + lengthLegs
-            ),
-            strokeWidth = strokeWidthLegs
-        )
-        drawLine(
-            color = color,
-            start = Offset(
-                center.x + baseWidth / 4 - paddingRope + paddingLegs,
-                topOfPost + lengthRope + radiusHead + sizeOval.height
-            ),
-            end = Offset(
-                center.x + baseWidth / 4 - paddingRope + paddingLegs,
-                topOfPost + lengthRope + radiusHead + sizeOval.height + lengthLegs
-            ),
-            strokeWidth = strokeWidthLegs
-        )
     }
 }
 
@@ -157,7 +173,7 @@ fun ImageOfGallows(modifier: Modifier = Modifier) {
 fun PreviewKeyboardGrid() {
     GallowsGameTheme {
         Box(Modifier.size(400.dp)) {
-            ImageOfGallows()
+            ImageOfGallows(stage = 8)
         }
 
     }

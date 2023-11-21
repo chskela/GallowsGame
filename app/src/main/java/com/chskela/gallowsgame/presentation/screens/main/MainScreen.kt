@@ -115,7 +115,10 @@ fun MainScreen(
                             }
                             VerticalSpacer8Dp()
                             Mask(modifier = Modifier.weight(0.2f), mask = uiState.mask)
-                            ImageOfGallows(modifier = Modifier.weight(0.6f))
+                            ImageOfGallows(
+                                modifier = Modifier.weight(0.6f),
+                                stage = uiState.attempts
+                            )
                         }
                     }
                 }
