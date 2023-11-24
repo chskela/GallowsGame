@@ -11,7 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chskela.gallowsgame.presentation.ui.theme.GallowsGameTheme
@@ -19,149 +22,144 @@ import com.chskela.gallowsgame.presentation.ui.theme.GallowsGameTheme
 @Composable
 fun ImageOfGallows(modifier: Modifier = Modifier, stage: Int) {
     val color = MaterialTheme.colorScheme.onBackground
-
+    val woodColor = Color(0xffe0803f)
     Canvas(
         modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
         val height = size.height
-        val baseWidth = height * 0.8f
-        val topOfPost = height * 0.1f
-
-        val strokeWidthBase = 30f
-        val strokeWidthPost = 20f
-        val strokeWidthCrossbar = 20f
-        val strokeWidthRope = 7f
-        val strokeWidthHands = 5f
-        val strokeWidthLegs = 10f
-
-        val lengthRope = baseWidth * 0.2f
-        val lengthHands = baseWidth * 0.2f
-        val lengthLegs = baseWidth * 0.25f
-
-        val paddingRope = 20f
-        val radiusHead = baseWidth * 0.07f
-        val sizeOval = Size(radiusHead * 2.5f, radiusHead * 5)
-        val paddingLegs = sizeOval.width / 3
 
         // Base
+        val widthBase = height * 0.8f
+        val heightBase = widthBase * 0.07f
+        val paddingYBase = height - heightBase
+
         if (stage >= 1) {
-            drawLine(
-                color = color,
-                start = Offset(center.x - baseWidth / 2, height - strokeWidthBase),
-                end = Offset(center.x + baseWidth / 2, height - strokeWidthBase),
-                strokeWidth = strokeWidthBase
+            drawRectWithStroke(
+                fillColor = woodColor,
+                strokeColor = color,
+                topLeft = Offset(x = center.x - widthBase / 2, y = paddingYBase),
+                size = Size(width = widthBase, height = heightBase),
             )
         }
 
         //Post
+        val heightPost = height * 0.9f
+        val widthPost = heightBase * 0.8f
+        val paddingXPost = center.x - widthBase / 4
+        val paddingYPost = paddingYBase - heightPost
+
         if (stage >= 2) {
-            drawLine(
-                color = color,
-                start = Offset(center.x - baseWidth / 4, height - strokeWidthBase),
-                end = Offset(center.x - baseWidth / 4, topOfPost),
-                strokeWidth = strokeWidthPost
+            drawRectWithStroke(
+                fillColor = woodColor,
+                strokeColor = color,
+                topLeft = Offset(x = paddingXPost, y = paddingYPost),
+                size = Size(width = widthPost, height = heightPost),
             )
         }
 
         // Crossbar
+        val heightCrossbar = heightBase * 0.7f
+
         if (stage >= 3) {
-            drawLine(
-                color = color,
-                start = Offset(center.x - baseWidth / 4, topOfPost + strokeWidthCrossbar / 2),
-                end = Offset(center.x + baseWidth / 4, topOfPost + strokeWidthCrossbar / 2),
-                strokeWidth = strokeWidthCrossbar
+            drawRectWithStroke(
+                fillColor = woodColor,
+                strokeColor = color,
+                topLeft = Offset(x = paddingXPost - heightCrossbar, y = paddingYPost),
+                size = Size(width = widthBase / 2 + heightCrossbar, height = heightCrossbar),
             )
         }
 
         // Rope
+        val widthRope = heightCrossbar * 0.3f
+        val lengthRope = widthBase * 0.2f
+        val paddingRope = widthRope * 4
+        val paddingXRope = center.x + widthBase / 4 - paddingRope
+        val topLeftRope = Offset(x = paddingXRope, y = paddingYPost - widthRope)
+
         if (stage >= 4) {
-            drawLine(
-                color = color,
-                start = Offset(center.x + baseWidth / 4 - paddingRope, topOfPost - strokeWidthRope),
-                end = Offset(center.x + baseWidth / 4 - paddingRope, topOfPost + lengthRope),
-                strokeWidth = strokeWidthRope
+            drawRectWithStroke(
+                fillColor = woodColor,
+                strokeColor = color,
+                topLeft = topLeftRope.copy(x = topLeftRope.x - widthRope),
+                size = Size(width = widthRope, height = heightCrossbar + widthRope * 2),
+            )
+            drawRectWithStroke(
+                fillColor = woodColor,
+                strokeColor = color,
+                topLeft = topLeftRope,
+                size = Size(width = widthRope, height = lengthRope),
+            )
+            drawRectWithStroke(
+                fillColor = woodColor,
+                strokeColor = color,
+                topLeft = topLeftRope.copy(x = topLeftRope.x + widthRope),
+                size = Size(width = widthRope, height = heightCrossbar + widthRope * 2),
             )
         }
 
         // Head
+        val radiusHead = widthBase * 0.07f
+        val paddingYHead = paddingYPost - widthRope + lengthRope + radiusHead
+        val sizeOval = Size(width = radiusHead * 2.5f, height = radiusHead * 5)
+
         if (stage >= 5) {
             drawCircle(
                 color = color,
                 radius = radiusHead,
-                center = Offset(
-                    center.x + baseWidth / 4 - paddingRope,
-                    topOfPost + lengthRope + radiusHead
-                ),
+                center = Offset(x = paddingXRope, y = paddingYHead),
                 style = Stroke(5f)
             )
         }
 
         // Body
+        val paddingYBody = paddingYPost - widthRope + lengthRope + radiusHead * 2
+
         if (stage >= 6) {
             drawOval(
-                color = color, topLeft = Offset(
-                    center.x + baseWidth / 4 - paddingRope - sizeOval.width / 2,
-                    topOfPost + lengthRope + radiusHead * 2
-                ), size = sizeOval
+                color = color,
+                topLeft = Offset(x = paddingXRope - sizeOval.width / 2, y = paddingYBody),
+                size = sizeOval
             )
         }
 
         // Hands
+        val strokeWidthHands = radiusHead * 0.2f
+        val lengthHands = radiusHead * 3f
+
         if (stage >= 7) {
             drawLine(
                 color = color,
-                start = Offset(
-                    center.x + baseWidth / 4 - paddingRope,
-                    topOfPost + lengthRope + radiusHead * 2
-                ),
-                end = Offset(
-                    center.x + baseWidth / 4 - paddingRope - sizeOval.width,
-                    topOfPost + lengthRope + radiusHead * 2 + lengthHands
-                ),
+                start = Offset(x = paddingXRope, y = paddingYBody),
+                end = Offset(x = paddingXRope - sizeOval.width, y = paddingYBody + lengthHands),
                 strokeWidth = strokeWidthHands
             )
             drawLine(
                 color = color,
-                start = Offset(
-                    center.x + baseWidth / 4 - paddingRope,
-                    topOfPost + lengthRope + radiusHead * 2
-                ),
-                end = Offset(
-                    center.x + baseWidth / 4 - paddingRope + sizeOval.width,
-                    topOfPost + lengthRope + radiusHead * 2 + lengthHands
-                ),
+                start = Offset(x = paddingXRope, y = paddingYBody),
+                end = Offset(x = paddingXRope + sizeOval.width, y = paddingYBody + lengthHands),
                 strokeWidth = strokeWidthHands
             )
         }
 
         // Legs
+        val strokeWidthLegs = radiusHead * 0.3f
+        val lengthLegs = radiusHead * 3.5f
+        val paddingLegs = sizeOval.width / 3
+
         if (stage >= 8) {
-            drawLine(
-                color = color,
-                start = Offset(
-                    center.x + baseWidth / 4 - paddingRope - paddingLegs,
-                    topOfPost + lengthRope + radiusHead + sizeOval.height
-                ),
-                end = Offset(
-                    center.x + baseWidth / 4 - paddingRope - paddingLegs,
-                    topOfPost + lengthRope + radiusHead + sizeOval.height + lengthLegs
-                ),
-                strokeWidth = strokeWidthLegs
+            val pathLeg = Path()
+            pathLeg.moveTo(x = paddingXRope - paddingLegs, y = paddingYHead + sizeOval.height)
+            pathLeg.lineTo(
+                x = paddingXRope - paddingLegs,
+                y = paddingYHead + sizeOval.height + lengthLegs
             )
-            drawLine(
-                color = color,
-                start = Offset(
-                    center.x + baseWidth / 4 - paddingRope + paddingLegs,
-                    topOfPost + lengthRope + radiusHead + sizeOval.height
-                ),
-                end = Offset(
-                    center.x + baseWidth / 4 - paddingRope + paddingLegs,
-                    topOfPost + lengthRope + radiusHead + sizeOval.height + lengthLegs
-                ),
-                strokeWidth = strokeWidthLegs
-            )
+
+            drawPath(path = pathLeg, color = color, style = Stroke(strokeWidthLegs))
+            translate(left = paddingLegs * 2) {
+                drawPath(path = pathLeg, color = color, style = Stroke(strokeWidthLegs))
+            }
         }
 
     }

@@ -94,14 +94,11 @@ fun MainScreen(
                                 .height(4.dp)
                         )
                     } else {
-                        Column(
-                            modifier = Modifier
-                                .padding(horizontal = 16.dp)
-                                .weight(0.2f)
-                        ) {
-                            VerticalSpacer8Dp()
+                        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                             Row(
-                                modifier = Modifier.fillMaxWidth(),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .weight(0.15f),
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 Text(
@@ -113,8 +110,7 @@ fun MainScreen(
                                     style = MaterialTheme.typography.headlineSmall
                                 )
                             }
-                            VerticalSpacer8Dp()
-                            Mask(modifier = Modifier.weight(0.2f), mask = uiState.mask)
+                            Mask(modifier = Modifier.weight(0.25f), mask = uiState.mask)
                             ImageOfGallows(
                                 modifier = Modifier.weight(0.6f),
                                 stage = uiState.attempts
@@ -126,7 +122,7 @@ fun MainScreen(
                     modifier = Modifier
                         .weight(0.4f)
                         .padding(horizontal = 16.dp),
-                    verticalAlignment = Alignment.Bottom
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     if (uiState.alphabet.isNotEmpty()) {
                         val size = calculateSizeItem(windowInfo, uiState.alphabet.size)
