@@ -11,7 +11,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.chskela.gallowsgame.R
 import com.chskela.gallowsgame.presentation.ui.theme.GallowsGameTheme
 
-
 @Composable
 fun GameDialog(
     word: String,

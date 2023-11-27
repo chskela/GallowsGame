@@ -4,13 +4,10 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -22,17 +19,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chskela.gallowsgame.R
+import com.chskela.gallowsgame.presentation.screens.main.components.MainScreenDialog
+import com.chskela.gallowsgame.presentation.screens.main.components.MainScreenTopAppBar
 import com.chskela.gallowsgame.presentation.screens.main.models.MainScreenUiState
 import com.chskela.gallowsgame.presentation.ui.components.error.Error
 import com.chskela.gallowsgame.presentation.ui.components.gallowsview.ImageOfGallows
-import com.chskela.gallowsgame.presentation.ui.components.gameoverdialog.GameDialog
-import com.chskela.gallowsgame.presentation.ui.components.icons.HintIcon
-import com.chskela.gallowsgame.presentation.ui.components.icons.RefreshIcon
 import com.chskela.gallowsgame.presentation.ui.components.keyboard.Key
 import com.chskela.gallowsgame.presentation.ui.components.keyboard.KeyboardGrid
 import com.chskela.gallowsgame.presentation.ui.components.mask.Mask
 import com.chskela.gallowsgame.presentation.ui.components.spacers.VerticalSpacer8Dp
-import com.chskela.gallowsgame.presentation.ui.components.topappbar.GallowsTopAppBar
 import com.chskela.gallowsgame.presentation.ui.theme.GallowsGameTheme
 import com.chskela.gallowsgame.utils.WindowInfo
 import com.chskela.gallowsgame.utils.calculateSizeItem
@@ -43,38 +38,13 @@ fun MainScreen(
     onEvent: (MainScreenEvent) -> Unit = {},
     windowInfo: WindowInfo
 ) {
-    val title = if (uiState.isGameOver) {
-        stringResource(R.string.game_over)
-    } else if (uiState.isWin) {
-        stringResource(R.string.win)
-    } else ""
-
-    GameDialog(
-        word = uiState.word,
-        title = title,
-        openDialog = uiState.isGameOver || uiState.isWin,
-        onConfirm = {
-            onEvent(MainScreenEvent.NewGame)
-        }
+    MainScreenDialog(
+        uiState = uiState,
+        onConfirm = { onEvent(MainScreenEvent.NewGame) }
     )
 
     Scaffold(topBar = {
-        GallowsTopAppBar(
-            title = stringResource(id = R.string.app_name),
-            navigationIcon = {
-                Spacer(modifier = Modifier.size(48.dp))
-            },
-            actions = {
-                IconButton(
-                    onClick = { onEvent(MainScreenEvent.Hint) },
-                    enabled = uiState.isHintEnable,
-                    content = { HintIcon() }
-                )
-                IconButton(
-                    onClick = { onEvent(MainScreenEvent.NewGame) },
-                    content = { RefreshIcon() }
-                )
-            })
+        MainScreenTopAppBar(isHintEnable = uiState.isHintEnable, onEvent = onEvent)
     }) { padding ->
         Column(
             modifier = Modifier
