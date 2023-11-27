@@ -14,8 +14,8 @@ android {
         applicationId = "com.chskela.gallowsgame"
         minSdk = 26
         targetSdk = 33
-        versionCode = 9
-        versionName = "1.5.1"
+        versionCode = 10
+        versionName = "1.5.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
