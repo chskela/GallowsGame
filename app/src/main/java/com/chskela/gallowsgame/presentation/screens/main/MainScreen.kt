@@ -20,17 +20,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chskela.gallowsgame.R
 import com.chskela.gallowsgame.presentation.screens.main.components.MainScreenDialog
+import com.chskela.gallowsgame.presentation.screens.main.components.MainScreenKeyboard
 import com.chskela.gallowsgame.presentation.screens.main.components.MainScreenTopAppBar
 import com.chskela.gallowsgame.presentation.screens.main.models.MainScreenUiState
 import com.chskela.gallowsgame.presentation.ui.components.error.Error
 import com.chskela.gallowsgame.presentation.ui.components.gallowsview.ImageOfGallows
-import com.chskela.gallowsgame.presentation.ui.components.keyboard.Key
-import com.chskela.gallowsgame.presentation.ui.components.keyboard.KeyboardGrid
 import com.chskela.gallowsgame.presentation.ui.components.mask.Mask
 import com.chskela.gallowsgame.presentation.ui.components.spacers.VerticalSpacer8Dp
 import com.chskela.gallowsgame.presentation.ui.theme.GallowsGameTheme
 import com.chskela.gallowsgame.utils.WindowInfo
-import com.chskela.gallowsgame.utils.calculateSizeItem
 
 @Composable
 fun MainScreen(
@@ -94,22 +92,11 @@ fun MainScreen(
                         .padding(horizontal = 16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    if (uiState.alphabet.isNotEmpty()) {
-                        val size = calculateSizeItem(windowInfo, uiState.alphabet.size)
-                        KeyboardGrid {
-                            uiState.alphabet.map { letter ->
-                                val isUsed = uiState.usedLetters.contains(letter)
-                                val isCorrectLetter = uiState.word.contains(letter)
-
-                                Key(
-                                    letter = letter,
-                                    enabled = !isUsed,
-                                    isCorrectLetter = isCorrectLetter,
-                                    size = size,
-                                    onClick = { onEvent(MainScreenEvent.InputChar(letter)) })
-                            }
-                        }
-                    }
+                    MainScreenKeyboard(
+                        windowInfo = windowInfo,
+                        uiState = uiState,
+                        onEvent = onEvent
+                    )
                 }
                 VerticalSpacer8Dp()
             }
